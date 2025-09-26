@@ -1,35 +1,99 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from 'react';
+import GeneralInfo from './components/GeneralInfo.jsx';
+import Education from './components/Education.jsx';
+import Experience from './components/Experience.jsx';
+import './styles/App.css';
 
 function App() {
-  const [count, setCount] = useState(0)
+  // State for general information
+  const [generalInfo, setGeneralInfo] = useState({
+    name: '',
+    email: '',
+    phone: ''
+  });
+  const [isEditingGeneral, setIsEditingGeneral] = useState(true);
+
+  // State for education
+  const [education, setEducation] = useState({
+    school: '',
+    title: '',
+    date: ''
+  });
+  const [isEditingEducation, setIsEditingEducation] = useState(true);
+
+  // State for experience
+  const [experience, setExperience] = useState({
+    company: '',
+    position: '',
+    responsibilities: '',
+    dateFrom: '',
+    dateTo: ''
+  });
+  const [isEditingExperience, setIsEditingExperience] = useState(true);
+
+  // Handlers for general information
+  const handleGeneralSubmit = (data) => {
+    setGeneralInfo(data);
+    setIsEditingGeneral(false);
+  };
+
+  const handleGeneralEdit = () => {
+    setIsEditingGeneral(true);
+  };
+
+  // Handlers for education
+  const handleEducationSubmit = (data) => {
+    setEducation(data);
+    setIsEditingEducation(false);
+  };
+
+  const handleEducationEdit = () => {
+    setIsEditingEducation(true);
+  };
+
+  // Handlers for experience
+  const handleExperienceSubmit = (data) => {
+    setExperience(data);
+    setIsEditingExperience(false);
+  };
+
+  const handleExperienceEdit = () => {
+    setIsEditingExperience(true);
+  };
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <div className="app">
+      <header className="app-header">
+        <div className="cv-container text-center">
+          <h1>CV Builder</h1>
+          <p>Create your professional CV by filling out the sections below</p>
+        </div>
+      </header>
+
+      <main className="cv-container">
+        <GeneralInfo
+          data={generalInfo}
+          onSubmit={handleGeneralSubmit}
+          onEdit={handleGeneralEdit}
+          isEditing={isEditingGeneral}
+        />
+
+        <Education
+          data={education}
+          onSubmit={handleEducationSubmit}
+          onEdit={handleEducationEdit}
+          isEditing={isEditingEducation}
+        />
+
+        <Experience
+          data={experience}
+          onSubmit={handleExperienceSubmit}
+          onEdit={handleExperienceEdit}
+          isEditing={isEditingExperience}
+        />
+      </main>
+    </div>
+  );
 }
 
-export default App
+export default App;
